@@ -155,10 +155,38 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--vermelho); outl
 input[aria-invalid=true] { border-color: #FF9C88; }
 /* fotos coloridas: o tom quente delas casa com o salmão */
 .foto img { position: absolute; inset: 0; filter: none; object-position: 50% 20%; }
-.pilares { margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.pilar { background: var(--branco); border: 1px solid var(--linha); border-top: 3px solid var(--vermelho); border-radius: 4px; padding: 14px; }
-.pilar b { display: block; font-weight: 900; font-stretch: 62%; text-transform: uppercase; font-size: 1.25rem; line-height: 1; }
-.pilar span { display: block; margin-top: 6px; font-size: .82rem; color: var(--cinza); }
+.cargo { margin-top: 10px; display: inline-flex; align-items: baseline; gap: 8px; background: var(--tinta); color: #fff; border-radius: 6px; padding: 6px 12px 7px; font-weight: 900; font-stretch: 62%; text-transform: uppercase; font-size: 1.5rem; line-height: 1; letter-spacing: .03em; }
+.cargo span { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-weight: 400; text-transform: none; font-size: 1.15rem; color: var(--vermelho); letter-spacing: 0; }
+
+/* ===== Motion 3D (leve) ===== */
+.palco { position: relative; margin-top: 26px; perspective: 1000px; }
+.palco .foto { margin: 0; box-shadow: 0 40px 60px -34px rgba(60,35,25,.45), 0 0 0 1px rgba(0,0,0,.03); }
+.tilt { transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.2,.7,.2,1); will-change: transform; }
+.tilt .foto { animation: balanca 9s ease-in-out infinite; transform-style: preserve-3d; }
+.brilho { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 45% at var(--bx, 30%) var(--by, 20%), rgba(255,255,255,.28), transparent 70%); mix-blend-mode: soft-light; transition: background .3s; }
+.esfera { position: absolute; z-index: 3; border-radius: 50%; pointer-events: none; animation: flutua 7s ease-in-out infinite; translate: 0 var(--py, 0px); }
+.e-salmao { width: 96px; height: 96px; right: -14px; top: 26%; background: radial-gradient(circle at 32% 28%, #fff 0, #FFD9CF 10%, #F6A08B 38%, #E57A61 66%, #A9483A 100%); box-shadow: 0 26px 40px -18px rgba(201,95,72,.6); }
+.e-areia { width: 62px; height: 62px; left: -12px; bottom: 16%; background: radial-gradient(circle at 32% 28%, #fff 0, #FBF7F1 14%, #E7DCCB 48%, #C2AF94 82%, #9C8769 100%); box-shadow: 0 20px 30px -16px rgba(110,90,60,.5); animation-duration: 8.5s; animation-delay: -2s; }
+.e-tinta { width: 30px; height: 30px; left: 18%; top: -10px; background: radial-gradient(circle at 32% 28%, #8A8A8A 0, #3A3A3A 30%, #111 75%); box-shadow: 0 14px 20px -10px rgba(0,0,0,.5); animation-duration: 6s; animation-delay: -1s; }
+@keyframes flutua { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(0,-14px,0) scale(1.04); } }
+@keyframes balanca { 0%, 100% { transform: rotateY(-3deg) rotateX(1deg); } 50% { transform: rotateY(3deg) rotateX(-1deg); } }
+
+html, body { overflow-x: clip; }
+.faixa-caixa { overflow: hidden; padding: 26px 0 10px; }
+.faixa { position: relative; z-index: 2; margin: 0 -24px; transform: rotate(-3deg); background: var(--vermelho); color: var(--tinta); padding: 11px 0 10px; overflow: hidden; white-space: nowrap; box-shadow: 0 18px 30px -18px rgba(201,95,72,.7); }
+.faixa-trilho { display: inline-flex; align-items: center; gap: 18px; padding-left: 18px; animation: corre 26s linear infinite; font-weight: 900; font-stretch: 62%; text-transform: uppercase; font-size: 1.45rem; line-height: 1; letter-spacing: .02em; }
+.faixa-trilho .serif { text-transform: none; font-size: 1.6rem; }
+.faixa-trilho i { width: 12px; height: 12px; border-radius: 50%; flex: none; background: radial-gradient(circle at 32% 28%, #8A8A8A, #111 70%); }
+@keyframes corre { to { transform: translateX(-50%); } }
+
+.lista { position: relative; overflow: hidden; }
+.lista .wrap { position: relative; z-index: 1; }
+.esfera-lista { position: absolute; width: 220px; height: 220px; right: -70px; top: -40px; border-radius: 50%; background: radial-gradient(circle at 32% 28%, #FFD9CF 0, #F28C74 35%, #A9483A 80%, #5A2219 100%); opacity: .35; filter: blur(.5px); animation: flutua 10s ease-in-out infinite; pointer-events: none; }
+
+.js .r { opacity: 0; transform: perspective(800px) translateY(26px) rotateX(16deg); transform-origin: 50% 100%; transition: opacity .7s ease, transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.js .r.vis { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .esfera, .esfera-lista, .tilt .foto, .faixa-trilho { animation: none !important; } .tilt { transform: none !important; } .js .r { opacity: 1; transform: none; } }
+
 .foto-sobre { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; object-position: 50% 30%; margin-top: 18px; border-radius: 22px 22px 999px 999px; }
 </style>
 </head>
@@ -168,10 +196,18 @@ input[aria-invalid=true] { border-color: #FF9C88; }
   <div class="wrap">
     <span class="selo entra"><i></i>Lista de espera · atendimentos 2027</span>
 
-    <div class="foto entra" style="animation-delay:.05s">
-      <span class="mono" aria-hidden="true">JV</span>
-      <img src="img/julia.jpg" alt="Julia Vick" onerror="this.remove()">
-      <span class="tag">Gestalt-terapia</span>
+    <div class="palco entra" id="palco" style="animation-delay:.05s">
+      <span class="esfera e-salmao" data-p="-.18" aria-hidden="true"></span>
+      <span class="esfera e-areia" data-p=".12" aria-hidden="true"></span>
+      <span class="esfera e-tinta" data-p="-.3" aria-hidden="true"></span>
+      <div class="tilt" id="tilt">
+        <div class="foto">
+          <span class="mono" aria-hidden="true">JV</span>
+          <img src="img/julia.jpg" alt="Julia Vick" onerror="this.remove()">
+          <span class="brilho" aria-hidden="true"></span>
+          <span class="tag">Gestalt-terapia</span>
+        </div>
+      </div>
     </div>
 
     <h1 class="entra" style="animation-delay:.1s">Julia<br>Vick</h1>
@@ -196,18 +232,26 @@ input[aria-invalid=true] { border-color: #FF9C88; }
   </div>
 </header>
 
+<div class="faixa-caixa"><div class="faixa" aria-hidden="true">
+  <div class="faixa-trilho">
+    <span>Clínica</span><i></i><span>Esporte</span><i></i><span class="serif">Gestalt-terapia</span><i></i><span>Adolescentes</span><i></i><span>Adultos</span><i></i><span>Atletas</span><i></i>
+    <span>Clínica</span><i></i><span>Esporte</span><i></i><span class="serif">Gestalt-terapia</span><i></i><span>Adolescentes</span><i></i><span>Adultos</span><i></i><span>Atletas</span><i></i>
+  </div>
+</div></div>
+
 <main>
   <section>
     <div class="wrap">
       <p class="rotulo">Quem sou</p>
       <h2>Prazer, <span class="serif">Julia</span></h2>
+      <p class="cargo"><span>Futura</span> Psicóloga</p>
       <div class="texto">
-        <p>Estou terminando a graduação em Psicologia e também estudo Nutrição. Vou atender na clínica, com quem quer se entender melhor e cuidar da saúde emocional, e também atletas, porque o esporte faz parte da minha vida: corro, faço HYROX e CrossFit.</p>
+        <p>Estou terminando a graduação em Psicologia e também estudo Nutrição. Vou atender na clínica, adolescentes e adultos que querem se entender melhor e cuidar da saúde emocional, e também atletas, porque o esporte faz parte da minha vida: corro, faço HYROX e CrossFit.</p>
         <p>Acredito numa terapia de verdade, sem julgamento, onde você pode chegar do jeito que está. O ponto de partida é sempre o que você está vivendo agora.</p>
       </div>
       <img class="foto-sobre" src="img/julia-sorrindo.jpg" alt="Julia sorrindo, sentada no sofá" loading="lazy" width="720" height="720">
       <div class="dois-lados">
-        <div class="lado escuro"><b>Clínica</b><span>Ansiedade, autoestima, relações e autoconhecimento, pra qualquer pessoa.</span></div>
+        <div class="lado escuro"><b>Clínica</b><span>Adolescentes e adultos: ansiedade, autoestima, relações e autoconhecimento.</span></div>
         <div class="lado"><b>Esporte</b><span>Pra atletas que querem cuidar da cabeça tanto quanto do treino.</span></div>
       </div>
     </div>
@@ -220,19 +264,13 @@ input[aria-invalid=true] { border-color: #FF9C88; }
       <div class="texto">
         <p>A Gestalt olha pra pessoa como um todo: o que você pensa, sente, faz e o que o seu corpo mostra. Em vez de buscar respostas prontas, a gente investiga junto como você está vivendo as coisas, pra que você perceba seus padrões e encontre novas formas de agir.</p>
       </div>
-      <div class="pilares">
-        <div class="pilar"><b>Aqui e agora</b><span>O foco é o que acontece com você no presente, inclusive o que o passado ainda mexe hoje.</span></div>
-        <div class="pilar"><b>Awareness</b><span>Perceber com clareza o que você sente, pensa e faz. É daí que a mudança nasce.</span></div>
-        <div class="pilar"><b>Relação</b><span>Terapia como encontro: uma conversa honesta, de igual pra igual, sem julgamento.</span></div>
-        <div class="pilar"><b>Corpo inteiro</b><span>Emoção também aparece no corpo. Na Gestalt, ele faz parte da conversa.</span></div>
-      </div>
     </div>
   </section>
 
   <section>
     <div class="wrap">
       <p class="rotulo">O que eu trabalho</p>
-      <h2>Do que a gente <span class="serif">cuida</span></h2>
+      <h2>Do que eu <span class="serif">cuido</span></h2>
       <div class="temas">
         <div class="tema"><span class="n">01</span><h3>Ansiedade e estresse</h3><p>Aquela cabeça que não desliga, a cobrança constante e o cansaço de dar conta de tudo.</p></div>
         <div class="tema"><span class="n">02</span><h3>Autoestima e autoconhecimento</h3><p>Entender quem você é, o que você quer e se tratar com menos cobrança.</p></div>
@@ -244,7 +282,7 @@ input[aria-invalid=true] { border-color: #FF9C88; }
       <div class="pra-quem">
         <p class="rotulo" style="margin-bottom:12px">Pra quem é</p>
         <ul>
-          <li>Adultos e jovens adultos que querem começar (ou voltar pra) terapia</li>
+          <li>Adolescentes e adultos que querem começar (ou voltar pra) terapia</li>
           <li>Quem anda ansioso, sobrecarregado ou se sente travado</li>
           <li>Mulheres que querem uma relação mais leve com o corpo</li>
           <li>Atletas amadores e profissionais: corrida, HYROX, CrossFit e endurance</li>
@@ -256,6 +294,7 @@ input[aria-invalid=true] { border-color: #FF9C88; }
   </section>
 
   <section class="lista" id="lista">
+    <span class="esfera-lista" aria-hidden="true"></span>
     <div class="wrap">
       <p class="rotulo">Lista de espera 2027</p>
       <h2>Garanta seu <span class="serif">lugar</span></h2>
@@ -314,6 +353,51 @@ input[aria-invalid=true] { border-color: #FF9C88; }
   <p class="credito">Página criada por Argus AI</p>
 </footer>
 
+<script>
+/* Motion: revelação 3D na rolagem, parallax das esferas e foto que inclina com o toque/mouse */
+(function () {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js');
+
+  // Revelação em 3D
+  var alvos = document.querySelectorAll('main .rotulo, main h2, main .texto, .cargo, .foto-sobre, .lado, .tema, .pra-quem, .citacao, .aviso, form, .lista .texto');
+  [].forEach.call(alvos, function (el) {
+    el.classList.add('r');
+    var irmaos = el.parentElement ? [].filter.call(el.parentElement.children, function (c) { return c.classList.contains('tema') || c.classList.contains('lado'); }) : [];
+    var i = irmaos.indexOf(el); if (i > 0) el.style.setProperty('--d', (i * 0.08) + 's');
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    [].forEach.call(alvos, function (el) { io.observe(el); });
+  } else { [].forEach.call(alvos, function (el) { el.classList.add('vis'); }); }
+
+  // Parallax das esferas
+  var esferas = document.querySelectorAll('.esfera[data-p]'), pedido = false;
+  function rola() {
+    pedido = false; var y = window.scrollY;
+    [].forEach.call(esferas, function (s) { s.style.setProperty('--py', (y * parseFloat(s.dataset.p)).toFixed(1) + 'px'); });
+  }
+  window.addEventListener('scroll', function () { if (!pedido) { pedido = true; requestAnimationFrame(rola); } }, { passive: true });
+
+  // Foto inclina seguindo o dedo/mouse
+  var palco = document.getElementById('palco'), tilt = document.getElementById('tilt');
+  function inclina(x, y) {
+    var r = palco.getBoundingClientRect();
+    var px = Math.min(Math.max((x - r.left) / r.width, 0), 1), py = Math.min(Math.max((y - r.top) / r.height, 0), 1);
+    tilt.style.setProperty('--ry', ((px - .5) * 14).toFixed(2) + 'deg');
+    tilt.style.setProperty('--rx', ((.5 - py) * 10).toFixed(2) + 'deg');
+    tilt.style.setProperty('--bx', (px * 100).toFixed(0) + '%');
+    tilt.style.setProperty('--by', (py * 100).toFixed(0) + '%');
+  }
+  function solta() { ['--rx', '--ry'].forEach(function (v) { tilt.style.setProperty(v, '0deg'); }); }
+  palco.addEventListener('pointermove', function (e) { inclina(e.clientX, e.clientY); });
+  palco.addEventListener('pointerleave', solta);
+  palco.addEventListener('touchmove', function (e) { var t = e.touches[0]; inclina(t.clientX, t.clientY); }, { passive: true });
+  palco.addEventListener('touchend', solta);
+})();
+</script>
 <script src="config.js"></script>
 <script>
 (function () {
